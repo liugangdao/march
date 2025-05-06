@@ -8,7 +8,6 @@ export default function Header() {
       <div className="header-inner">
         <div className="logo-box">
         <img src="/fox.png" alt="logo" className="logo" />
-          
         </div>
         <nav className="nav">
           <a href="#">我们的房间</a>

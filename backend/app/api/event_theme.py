@@ -8,12 +8,6 @@ from app.database import get_db
 from typing import List
 
 router = APIRouter()
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.get("/themes", response_model=List[EventThemeSchema])
 def read_themes(db: Session = Depends(get_db)):
