@@ -19,14 +19,19 @@ export default function DashboardPage() {
       })
       .catch((err) => console.error("Failed to fetch themes", err));
   }, []);
-  // DashboardPage.tsx
+  
   return (
-    <div className="dashboard">
-      <Section title="精选景点" data={scenicData} />
-      <Section title="美食推荐" data={foodData} />
-      <Section title="周边城市" data={cityData} />
-      <Section title="超值特卖" data={promoData} />
+    <div style={{ padding: "20px" }}>
+      {themes.map((theme) => (
+        <Card
+        key={theme.id}
+        id={theme.id}
+        imageUrl={theme.image_url}
+        name={theme.title}
+        rating={theme.rating}
+        description={theme.description}
+      />
+      ))}
     </div>
   );
-
 }

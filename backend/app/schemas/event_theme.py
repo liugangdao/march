@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from datetime import date, time
 
 class EventThemeCreate(BaseModel):
     title: str
@@ -12,3 +13,8 @@ class EventThemeSchema(EventThemeCreate):
 
     class Config:
         orm_mode = True
+class EventSlotCreate(BaseModel):
+    theme_id: int
+    date: date
+    time: time
+    max_people: int

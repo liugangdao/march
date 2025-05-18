@@ -10,11 +10,13 @@
   
   .card-image {
     width: 100%;
-    height: 180px;
+    max-height: 180px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 12px;
+    display: block;
   }
+  
   
   .card-title {
     font-size: 1.2rem;
@@ -31,5 +33,20 @@
   .card-description {
     font-size: 0.9rem;
     color: #4b5563; /* gray-700 */
+  }
+  .card-button {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .card-button:hover {
+    background-color: #333333;
   }
   
