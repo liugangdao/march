@@ -14,6 +14,7 @@ export default function ThemeDetailPage() {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
+    console.log("theme id from URL:", id);
     fetch(`http://127.0.0.1:8000/api/themes/${id}`)
       .then(res => res.json())
       .then(data => setTheme(data))
