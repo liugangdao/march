@@ -4,10 +4,17 @@ from pydantic import BaseModel
 class UserCreate(BaseModel):
     name: str
     email: str
+    password: str
 
-# 响应结构（用于返回用户数据）
-class UserOut(UserCreate):
+class UserOut(BaseModel):
     id: int
+    name: str
+    password: str
+    class Config:
+        from_attributes = True
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
     class Config:
         from_attributes = True

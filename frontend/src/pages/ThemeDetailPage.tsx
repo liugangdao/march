@@ -28,7 +28,6 @@ export default function ThemeDetailPage() {
       <img src={theme.image_url} alt={theme.title} style={{ maxWidth: "300px" }} />
       <p>评分: {theme.rating} / 5</p>
       <p>{theme.description}</p>
-      {/* 可加上预定表单等 */}
     </div>
   );
 }
