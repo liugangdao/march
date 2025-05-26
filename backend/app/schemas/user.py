@@ -12,6 +12,12 @@ class UserOut(BaseModel):
     password: str
     class Config:
         from_attributes = True
+# schemas.py
+class UserIdOnly(BaseModel):
+    id: int
+
+    class Config:
+        orm_mode = True
 
 class Token(BaseModel):
     access_token: str

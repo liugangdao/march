@@ -29,11 +29,23 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     token = create_access_token(data={"user_id": user.id})
     return {"access_token": token, "token_type": "bearer"}
 
+@router.get("/tokenget", response_model=user_schema.UserIdOnly)
+def get_current_user_info(
+    user_id: int = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    user = user_crud.get_user_by_id(db, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="用户不存在")
+    return user
 
+# @router.get("/tokenget",response_model=user_schema.UserIdOnly)
+# def get_current_user_info(current_user:get_current_user,db: Session = Depends(get_db)):
+#     return user_crud.get_user_by_id(db=db,user=current_user)
 
 @router.post("/", response_model=user_schema.UserOut)
 def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
-    return user_crud.create_user(db=db, user=user)
+    return user_crud.create_user(db=db, userid = user)
 
 @router.post("/users/", response_model=user_schema.UserOut)
 def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
