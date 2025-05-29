@@ -23,3 +23,13 @@ class EventSlot(Base):
     max_people = Column(Integer)
 
     theme = relationship("EventTheme", back_populates="slots")
+
+class Participation(Base):
+    __tablename__ = "participation"
+    id = Column(Integer,primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    slot_id = Column(Integer, ForeignKey("event_slots.id")) 
+    name = Column(String, nullable=True)
+    email = Column(String, nullable=True)
+    user = relationship("User")
+    slot = relationship("EventSlot")

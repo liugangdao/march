@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from app.schemas import user as user_schema
 from app.crud import user as user_crud
+
 from app.auth import create_access_token
 from app.database import get_db
 from app.auth import create_access_token, get_current_user
@@ -29,7 +30,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     token = create_access_token(data={"user_id": user.id})
     return {"access_token": token, "token_type": "bearer"}
 
-@router.get("/tokenget", response_model=user_schema.UserIdOnly)
+@router.get("/tokenget", response_model=user_schema.UserInfor)
 def get_current_user_info(
     user_id: int = Depends(get_current_user),
     db: Session = Depends(get_db)

@@ -13,9 +13,10 @@ class UserOut(BaseModel):
     class Config:
         from_attributes = True
 # schemas.py
-class UserIdOnly(BaseModel):
+class UserInfor(BaseModel):
     id: int
-
+    name:str
+    email:str
     class Config:
         orm_mode = True
 

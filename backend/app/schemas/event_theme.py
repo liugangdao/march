@@ -33,7 +33,13 @@ class EventThemeSchema(BaseModel):
 
 
 class EventSlotCreate(BaseModel):
-    theme_id: int
+    slot_id: int
     date: date
     time: time
-    max_people: int  # ⚠️ 一定要和 models 里字段一致
+    max_people: int  
+
+class ParticipationCreate(BaseModel):
+    slot_id :int
+    name : str
+    email :str
+
