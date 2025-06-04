@@ -2,10 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 // LoginPage.tsx 顶部
 import styles from "./LoginPage.module.css";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -22,26 +23,27 @@ export default function LoginPage() {
 
       const token = response.data.access_token;
       localStorage.setItem("token", token);
-      setMessage("✅ 登录成功");
+      setMessage("✅ Login Successful");
     } catch (error) {
-      setMessage("❌ 登录失败");
+      setMessage("❌ Fail to Login");
     }
+    navigate("/");
   };
 
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.card}>
-        <h1 className={styles.title}>登录</h1>
+        <h1 className={styles.title}>SignIn</h1>
         <input
           type="email"
-          placeholder="邮箱"
+          placeholder="Email"
           className={styles.inputField}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
-          placeholder="密码"
+          placeholder="password"
           className={styles.inputField}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -50,7 +52,7 @@ export default function LoginPage() {
           className={styles.submitButton}
           onClick={handleLogin}
         >
-          登录
+          Sign In
         </button>
         {message && (
           <p

@@ -4,17 +4,16 @@ import DashboardPage from "./pages/DashboardPage"
 import Layout from "./pages/Layout"
 import ThemeDetailPage from "./pages/ThemeDetailPage"
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage"
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<RegisterPage />} />
+      <Route path="register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-      
-      {/* 所有需要显示 Header 的页面都放在 Layout 中 */}
+      <Route path ="/admin" element ={<AdminPage />} />
       <Route element={<Layout />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route path="/themes/:id" element={<ThemeDetailPage />} />
-        {/* 你未来还可以加更多需要 header 的页面 */}
       </Route>
     </Routes>
   )

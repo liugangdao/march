@@ -1,0 +1,224 @@
+/* 整体布局 */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+/* 左侧导航栏 */
+.sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.tab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tab-trigger {
+  padding: 12px 16px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tab-trigger:hover {
+  background-color: #f3f4f6;
+}
+
+.tab-trigger.active {
+  background-color: #e0f2fe;
+  font-weight: bold;
+}
+
+/* 右侧内容区域 */
+.main-content {
+  flex: 1;
+  padding: 32px;
+  background-color: #f9fafb;
+}
+
+/* 顶部搜索栏 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-bar input {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+}
+.add-script {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-script input,
+.add-script textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.add-script input:focus,
+.add-script textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.add-script button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.add-script button:hover {
+  background-color: #2563eb;
+}
+
+.edit-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 480px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.edit-form h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.edit-form input,
+.edit-form textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+.edit-form input:focus,
+.edit-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.edit-form textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+.edit-form input[type="date"],
+.edit-form input[type="time"],
+.edit-form input[type="number"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+.edit-form .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.edit-form button {
+  padding: 0.75rem 1.2rem;
+  margin-right: 1rem;
+  border: none;
+  border-radius: 0.5erm;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edit-form button:first-of-type {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-form button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+.edit-form button:last-of-type {
+  background-color: #ccc;
+  color: #333;
+}
+
+.edit-form button:last-of-type:hover {
+  background-color: #aaa;
+}
+.admin-theme-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.admin-theme-grid > * {
+  flex: 1 1 300px;  
+  max-width: 350px;
+}

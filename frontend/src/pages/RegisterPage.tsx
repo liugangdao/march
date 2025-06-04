@@ -8,65 +8,100 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const handleRegister = async () => {
+    if (!validatePassword()) return;
     setLoading(true);
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/users/register", {
         name,
         email,
-        password, // ✅ 加上 password
+        password,
       });
-      setMessage("✅ 注册成功，用户ID：" + response.data.id);
+      setMessage("✅ Registration successful! User ID: " + response.data.id);
       setName("");
       setEmail("");
       setPassword("");
+      setConfirmPassword("");
       navigate("/login");
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        setMessage("❌ 注册失败：" + error.response.data.detail);
+      if (error.response && error.response.data?.detail) {
+        setMessage("❌ Registration failed: " + error.response.data.detail);
       } else {
-        setMessage("❌ 注册失败，请检查服务器是否开启！");
+        setMessage("❌ Registration failed. Please check if the server is running.");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const validatePassword = (): boolean => {
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const isValidLength = password.length >= 10;
+
+    if (!isValidLength || !hasLetter) {
+      setPasswordError("Password must be at least 10 characters and contain letters.");
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return false;
+    }
+
+    setPasswordError("");
+    return true;
+  };
+
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.card}>
-        <h1 className={styles.title}>用户注册</h1>
+        <h1 className={styles.title}>User Registration</h1>
         <input
           type="text"
-          placeholder="用户名"
+          placeholder="Username"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className={styles.inputField}
         />
         <input
           type="email"
-          placeholder="邮箱"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={styles.inputField}
         />
         <input
           type="password"
-          placeholder="密码"
-          value={password} // ✅ 改成 password
+          placeholder="Password (at least 10 characters with letters)"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           className={styles.inputField}
         />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className={styles.inputField}
+        />
+
+        {passwordError && (
+          <p className={styles.messageError}>{passwordError}</p>
+        )}
+
         <button
           onClick={handleRegister}
           className={styles.submitButton}
           disabled={loading}
         >
-          {loading ? "注册中..." : "注册"}
+          {loading ? "Registering..." : "Register"}
         </button>
+
         {message && (
           <p
             className={

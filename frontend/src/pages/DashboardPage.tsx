@@ -1,5 +1,6 @@
 import Card from "../components/Card"
 import React, { useEffect, useState } from "react";
+import "./DashboardPage.css"; 
 
 interface Theme {
   id: number;
@@ -20,10 +21,10 @@ export default function DashboardPage() {
       .catch((err) => console.error("Failed to fetch themes", err));
   }, []);
   
-  return (
-    <div style={{ padding: "20px" }}>
-      {themes.map((theme) => (
-        <Card
+return (
+  <div className="dashboard-container">
+    {themes.map((theme) => (
+      <Card
         key={theme.id}
         id={theme.id}
         imageUrl={theme.image_url}
@@ -31,7 +32,8 @@ export default function DashboardPage() {
         rating={theme.rating}
         description={theme.description}
       />
-      ))}
-    </div>
-  );
+    ))}
+  </div>
+);
+
 }

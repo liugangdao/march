@@ -2,28 +2,38 @@ import { useNavigate } from "react-router-dom";
 
 import './Card.css';
 
+
 type CardProps = {
   imageUrl: string;
   name: string;
   rating: number;
   description: string;
   id: number;
+  showButton?: boolean;
 };
 
-export default function Card({ imageUrl, name, rating, description, id }: CardProps) {
+export default function Card({ imageUrl, name, rating, description, id, showButton = true, onDelete =false }: CardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/themes/${id}`);
   };
-
+  
   return (
     <div className="card">
-      <img src={imageUrl} alt={name} className="card-image" />
+        {imageUrl ? (
+        <img src={imageUrl} alt={name} className="card-image" />
+        ) : (
+        <div className="card-image-placeholder">No Image</div>
+        )}
       <h2 className="card-title">{name}</h2>
-      <p className="card-rating">评分: {rating} / 5</p>
+      <p className="card-rating">Rating: {rating} / 5</p>
       <p className="card-description">{description}</p>
-      <button onClick={handleClick} className="card-button">预定</button>
+      {showButton && ( 
+        <button onClick={handleClick} className="card-button">Book</button>
+      )}
+  
+
     </div>
   );
 }

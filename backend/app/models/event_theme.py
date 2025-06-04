@@ -23,6 +23,8 @@ class EventSlot(Base):
     max_people = Column(Integer)
 
     theme = relationship("EventTheme", back_populates="slots")
+    participations = relationship("Participation", back_populates="slot", cascade="all, delete-orphan")
+
 
 class Participation(Base):
     __tablename__ = "participation"
@@ -32,4 +34,4 @@ class Participation(Base):
     name = Column(String, nullable=True)
     email = Column(String, nullable=True)
     user = relationship("User")
-    slot = relationship("EventSlot")
+    slot = relationship("EventSlot", back_populates="participations")
