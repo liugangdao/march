@@ -5,6 +5,7 @@ import Card from "@/components/Card"
 import axios from "axios";
 import AdminCard from "@/components/AdminCard"
 import AdminSlotCard from "@/components/AdminSlotCard"
+import BookingTable from "@/components/BookingTable";
 interface Theme{
     id: number
     title: string
@@ -29,6 +30,21 @@ interface Slot {
   time: string;
   maxpeople: number;
 };
+
+
+
+interface Booking {
+  slot_id: number;
+  theme_title: string;
+  date: string;
+  time: string;
+  max_people: number;
+  booked_people: number;
+  remaining: number;
+  user_name: string;
+  user_email: string;
+}
+
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("scripts")
   const [search, setSearch] = useState("")
@@ -65,13 +81,15 @@ export default function AdminPage() {
 const [isAdding, setIsAdding] = useState(false);
 const [addingThemeId, setAddingThemeId] = useState<number | null>(null);
 const [newSlot, setNewSlot] = useState({ date: "", time: "", max_people: "" });
-
+const [bookings, setBookings] = useState<Booking[]>([]);
+const [loading, setLoading] = useState(true);
 
 
 
   useEffect(()=>{
     fetchThemes();
     fetchSlots();
+    fetchBookingInf();
   }, []);
 
       const fetchThemes = async() =>{
@@ -244,7 +262,18 @@ const [newSlot, setNewSlot] = useState({ date: "", time: "", max_people: "" });
       console.error("Delete error:", error);
     }
   };
-
+  const fetchBookingInf = async (): Promise<void> => {
+    try {
+      const res = await fetch("http://localhost:8000/api/admin/bookings");
+      if (!res.ok) {
+        throw new Error("❌ Failed to receive the booking info");
+      }
+      const data = await res.json();
+      setBookings(data); 
+    } catch (err) {
+      console.error("❌ Error fetching booking info:", err);
+    }
+  };
   return (
     <div className="admin-container">
     
@@ -263,7 +292,7 @@ const [newSlot, setNewSlot] = useState({ date: "", time: "", max_people: "" });
             className={activeTab === "manage-scripts" ? "tab-trigger active" : "tab-trigger"}
             onClick={() => setActiveTab("manage-scripts")}
           >
-            ➕ MnageThem
+            ➕ ManageThemes
           </button>
 
 
@@ -273,6 +302,13 @@ const [newSlot, setNewSlot] = useState({ date: "", time: "", max_people: "" });
             onClick={() => setActiveTab("schedule")}
           >
             🕒 Time Management
+          </button>
+
+          <button
+            className={activeTab === "booking" ? "tab-trigger active" : "tab-trigger"}
+            onClick={() => setActiveTab("booking")}
+          >
+            🕒 Reservation Management
           </button>
         </div>
       </div>
@@ -498,9 +534,22 @@ const [newSlot, setNewSlot] = useState({ date: "", time: "", max_people: "" });
                 </div>
 
               )}
+              
             </div>
           )}
-        
+
+        {activeTab === "booking" && (
+          <div className="booking">
+            <BookingTable
+              bookings={bookings.filter((b) =>
+                b.theme_title.toLowerCase().includes(search.toLowerCase())
+              )}
+            />
+          </div>
+        )}
+
+
+
 
         </div>
       </div>

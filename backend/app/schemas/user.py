@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-# 请求结构（用于创建用户）
+
 class UserCreate(BaseModel):
     name: str
     email: str
@@ -12,7 +12,7 @@ class UserOut(BaseModel):
     password: str
     class Config:
         from_attributes = True
-# schemas.py
+
 class UserInfor(BaseModel):
     id: int
     name:str

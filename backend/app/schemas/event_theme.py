@@ -65,3 +65,13 @@ class ParticipationCreate(BaseModel):
     name : str
     email :str
 
+class BookingInfoSchema(BaseModel):
+    slot_id: int
+    theme_title: str
+    date: date
+    time: time
+    max_people: int
+    booked_people: int
+    remaining: int
+    user_name: str
+    user_email: str

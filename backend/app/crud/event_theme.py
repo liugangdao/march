@@ -87,40 +87,68 @@ def delete_slot(db:Session,slot_id: int):
 
 
 # 在 crud/event_theme.py 中添加
-from sqlalchemy import literal, cast, String, Integer, Date, Time
+# from sqlalchemy import literal, cast, String, Integer, Date, Time
+
+# def get_slot_cards(db: Session):
+#     # 查询有 slot 的数据
+#     query_with_slots = (
+#         db.query(
+#             EventSlot.id.label("slotid"),
+#             EventSlot.theme_id.label("themeid"),
+#             EventSlot.date,
+#             EventSlot.time,
+#             EventSlot.max_people.label("maxpeople"),
+#             EventTheme.title.label("name"),
+#             EventTheme.image_url.label("imageUrl")
+#         )
+#         .join(EventTheme, EventTheme.id == EventSlot.theme_id)
+#     )
+
+    
+#     query_without_slots = (
+#         db.query(
+#             literal(None).cast(Integer).label("slotid"),
+#             EventTheme.id.label("themeid"),
+#             literal(None).cast(Date).label("date"),
+#             literal(None).cast(Time).label("time"),
+#             literal(None).cast(Integer).label("maxpeople"),
+#             EventTheme.title.label("name"),
+#             EventTheme.image_url.label("imageUrl")
+#         )
+#         .filter(~EventTheme.slots.any())
+#     )
+
+#     results = query_with_slots.union_all(query_without_slots).all()
+#     return [dict(r._mapping) for r in results]
 
 def get_slot_cards(db: Session):
-    # 查询有 slot 的数据
-    query_with_slots = (
-        db.query(
-            EventSlot.id.label("slotid"),
-            EventSlot.theme_id.label("themeid"),
-            EventSlot.date,
-            EventSlot.time,
-            EventSlot.max_people.label("maxpeople"),
-            EventTheme.title.label("name"),
-            EventTheme.image_url.label("imageUrl")
-        )
-        .join(EventTheme, EventTheme.id == EventSlot.theme_id)
-    )
+    all_themes = db.query(EventTheme).all()
+    result = []
 
-    # 查询没有 slot 的主题，补 null 值（必须明确类型）
-    query_without_slots = (
-        db.query(
-            literal(None).cast(Integer).label("slotid"),
-            EventTheme.id.label("themeid"),
-            literal(None).cast(Date).label("date"),
-            literal(None).cast(Time).label("time"),
-            literal(None).cast(Integer).label("maxpeople"),
-            EventTheme.title.label("name"),
-            EventTheme.image_url.label("imageUrl")
-        )
-        .filter(~EventTheme.slots.any())
-    )
+    for theme in all_themes:
+        if theme.slots:  # 有 slots 就逐个加入
+            for slot in theme.slots:
+                result.append({
+                    "slotid": slot.id,
+                    "themeid": theme.id,
+                    "date": slot.date,
+                    "time": slot.time,
+                    "maxpeople": slot.max_people,
+                    "name": theme.title,
+                    "imageUrl": theme.image_url
+                })
+        else:  # 没有 slot，也返回一条
+            result.append({
+                "slotid": None,
+                "themeid": theme.id,
+                "date": None,
+                "time": None,
+                "maxpeople": None,
+                "name": theme.title,
+                "imageUrl": theme.image_url
+            })
 
-    results = query_with_slots.union_all(query_without_slots).all()
-    return [dict(r._mapping) for r in results]
-
+    return result
 
 
 def create_participation(db: Session, participation: ParticipationCreate, user_id: int):
@@ -138,3 +166,24 @@ def create_participation(db: Session, participation: ParticipationCreate, user_i
     db.commit()
     db.refresh(new_part)
     return new_part
+
+def get_book_inf(db: Session):
+    slots = db.query(EventSlot).join(EventTheme).outerjoin(Participation).all()
+    results = []
+
+    for slot in slots:
+        participants = db.query(Participation).filter(Participation.slot_id == slot.id).all()
+        for p in participants:
+            results.append({
+                "slot_id": slot.id,
+                "theme_title": slot.theme.title,
+                "date": slot.date,
+                "time": slot.time,
+                "max_people": slot.max_people,
+                "booked_people": len(participants),
+                "remaining": slot.max_people - len(participants),
+                "user_name": p.name,
+                "user_email": p.email,
+            })
+
+    return results

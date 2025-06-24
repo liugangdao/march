@@ -33,5 +33,5 @@ class Participation(Base):
     slot_id = Column(Integer, ForeignKey("event_slots.id")) 
     name = Column(String, nullable=True)
     email = Column(String, nullable=True)
-    user = relationship("User")
+    user = relationship("User", back_populates="participations", lazy="joined")
     slot = relationship("EventSlot", back_populates="participations")

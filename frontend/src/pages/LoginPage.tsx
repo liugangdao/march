@@ -24,10 +24,11 @@ export default function LoginPage() {
       const token = response.data.access_token;
       localStorage.setItem("token", token);
       setMessage("✅ Login Successful");
+      navigate("/");
     } catch (error) {
       setMessage("❌ Fail to Login");
     }
-    navigate("/");
+    
   };
 
   return (
@@ -36,7 +37,7 @@ export default function LoginPage() {
         <h1 className={styles.title}>SignIn</h1>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Email/UserName"
           className={styles.inputField}
           value={email}
           onChange={(e) => setEmail(e.target.value)}

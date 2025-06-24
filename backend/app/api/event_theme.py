@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import SessionLocal, engine, Base
 from app.schemas.event_theme import EventThemeSchema
-from app.schemas.event_theme import EventThemeSchema, EventThemeCreate,EventSlotCreate,SlotUpdate,SlotSchema,AdminSlotCardSchema,themeUpdate
-from app.schemas.event_theme import ParticipationCreate  # ✅ 来自正确 schema 文件
+from app.schemas.event_theme import EventThemeSchema, EventThemeCreate,EventSlotCreate,SlotUpdate,SlotSchema,AdminSlotCardSchema,themeUpdate,BookingInfoSchema
+from app.schemas.event_theme import ParticipationCreate  
 
 
 
@@ -70,7 +70,10 @@ def get_slot_cards(db: Session = Depends(get_db)):
 def create_participation(participation:ParticipationCreate,
     current_user_id: int = Depends(get_current_user),
     db: Session = Depends(get_db)):
-    print("✅ 使用的 ParticipationCreate 来自：", ParticipationCreate.__module__)
-    print("📥 收到数据：", participation)
+    print("✅ Using ParticipationCreate from：", ParticipationCreate.__module__)
+    print("📥 Data Recived：", participation)
     return crud.create_participation(db, participation, current_user_id)
 
+@router.get("/admin/bookings", response_model=List[BookingInfoSchema])
+def get_all_bookings(db: Session = Depends(get_db)):
+    return crud.get_book_inf(db)

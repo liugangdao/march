@@ -12,7 +12,7 @@ type CardProps = {
   showButton?: boolean;
 };
 
-export default function Card({ imageUrl, name, rating, description, id, showButton = true, onDelete =false }: CardProps) {
+export default function Card({ imageUrl, name, rating, description, id, showButton = true}: CardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {

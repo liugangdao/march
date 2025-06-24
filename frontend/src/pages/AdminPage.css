@@ -222,3 +222,45 @@
   flex: 1 1 300px;  
   max-width: 350px;
 }
+
+.booking {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin: 2rem auto;
+  overflow-x: auto;
+}
+
+.booking h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.booking table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.booking th, .booking td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.booking th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #444;
+}
+
+.booking tr:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.3s ease;
+}
