@@ -1,41 +1,55 @@
 // src/components/Header.tsx
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
 
   return (
     <header className="header">
       <div className="header-inner">
-        {/* 左侧 LOGO */}
-        <div className="logo-box">
-          <img src="/fox.png" alt="logo" className="logo" />
+       
+
+
+
+        <div className="nav-bar">
+          <div className="logo-box">
+            <img src="/fox.png" alt="logo" className="logo" />
           <span className="brand">escapefox</span>
         </div>
-
-        {/* 中间导航栏 */}
-        <div className="nav-bar">
           <nav className="nav">
-            <a href="#">Our Rooms</a>
-            <a href="#">FAQ</a>
-            <a href="#" className="active">Booking</a>
-            <a href="#">Corporate Events</a>
-            <a href="#">Gift Cards</a>
-            <a href="#">Contact Us</a>
+            <NavLink to="/ourRoom" className={({ isActive }) => isActive ? "active" : ""}>
+              Our Rooms
+            </NavLink>
+            <NavLink to="/faq" className={({ isActive }) => isActive ? "active" : ""}>
+              FAQ
+            </NavLink>
+            <NavLink to="/booking" className={({ isActive }) => isActive ? "active" : ""}>
+              Booking
+            </NavLink>
+            <NavLink to="/events" className={({ isActive }) => isActive ? "active" : ""}>
+              Corporate Events
+            </NavLink>
+            <NavLink to="/gift" className={({ isActive }) => isActive ? "active" : ""}>
+              Gift Cards
+            </NavLink>
+            <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>
+              Contact Us
+            </NavLink>
           </nav>
+          <div className="auth-buttons">
+            <button className="btn signin-btn" onClick={() => navigate("/login")}>
+              Sign In
+            </button>
+            <button className="btn register-btn" onClick={() => navigate("/register")}>
+              Register
+            </button>
+            
+          </div>
         </div>
 
-        {/* 右侧按钮 */}
-        <div className="auth-buttons">
-          <button className="btn signin-btn" onClick={() => navigate("/login")}>
-            Sign In
-          </button>
-          <button className="btn register-btn" onClick={() => navigate("/register")}>
-            Register
-          </button>
-          
-        </div>
+    
+
       </div>
     </header>
   );

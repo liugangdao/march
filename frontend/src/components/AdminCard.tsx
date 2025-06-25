@@ -24,11 +24,11 @@ export default function AdminCard({ imageUrl, name, rating, description, id, onD
       <h2 className="card-title">{name}</h2>
       <p className="card-rating">Rating: {rating} / 5</p>
       <p className="card-description">{description}</p>
-      <div className="flex gap-2">
+      <div className="card-buttons">
         <button className="card-button" onClick={() => onEdit(id)}>
           Edit
         </button>
-        <button className="card-button bg-red-500" onClick={() => onDelete(id)}>
+        <button className="card-button" onClick={() => onDelete(id)}>
           Delete
         </button>
       </div>

@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.schemas.event_theme import EventThemeCreate
 from app.models.event_theme import EventTheme
 from app.schemas.event_theme import EventSlotCreate,ParticipationCreate,SlotUpdate,themeUpdate
-
+from sqlalchemy import desc
 from app.models.event_theme import EventSlot,Participation
 from fastapi import HTTPException
 def get_all_themes(db: Session):
@@ -187,3 +187,9 @@ def get_book_inf(db: Session):
             })
 
     return results
+def get_top_theme(db:Session):
+    topThemes =(
+        db.query(EventTheme).filter(EventTheme.rating.isnot(None)).order_by(desc(EventTheme.rating)).limit(6).all()
+    
+    )
+    return topThemes

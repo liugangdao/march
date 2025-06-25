@@ -5,17 +5,22 @@ import Layout from "./pages/Layout"
 import ThemeDetailPage from "./pages/ThemeDetailPage"
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage"
+import OurRoom from "./pages/OurRoom"
+import "./App.css"
 function App() {
   return (
-    <Routes>
-      <Route path="register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path ="/admin" element ={<AdminPage />} />
-      <Route element={<Layout />}>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/themes/:id" element={<ThemeDetailPage />} />
-      </Route>
-    </Routes>
+    <div className="app-container">
+      <Routes>
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route element={<Layout />}>
+          <Route path="/booking" element={<DashboardPage />} />
+          <Route path="ourRoom" element={<OurRoom />} />
+          <Route path="/themes/:id" element={<ThemeDetailPage />} />
+        </Route>
+      </Routes>
+    </div>
   )
 }
 

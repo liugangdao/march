@@ -42,7 +42,6 @@ def update_theme(theme_id:int, theme: themeUpdate, db:Session = Depends(get_db))
 
 @router.post("/slots",response_model=EventSlotCreate)
 def create_slot(slot: EventSlotCreate, db: Session = Depends(get_db)):
-    print("💡 Received slot data:", slot)
     return crud.create_slot(db, slot)
 
 @router.get("/slots",response_model=List[SlotSchema])
@@ -77,3 +76,7 @@ def create_participation(participation:ParticipationCreate,
 @router.get("/admin/bookings", response_model=List[BookingInfoSchema])
 def get_all_bookings(db: Session = Depends(get_db)):
     return crud.get_book_inf(db)
+
+@router.get("/topThemes",response_model=List[EventThemeSchema])
+def get_top_Theme(db:Session = Depends(get_db)):
+    return crud.get_top_theme(db)

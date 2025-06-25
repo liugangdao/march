@@ -8,8 +8,7 @@
 /* 左侧导航栏 */
 .sidebar {
   width: 240px;
-  background-color: #ffffff;
-  border-right: 1px solid #e5e7eb;
+  background-color: rgb(69, 112, 143);
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -39,11 +38,11 @@
 }
 
 .tab-trigger:hover {
-  background-color: #f3f4f6;
+  background-color: white;
 }
 
 .tab-trigger.active {
-  background-color: #e0f2fe;
+  background-color: #dbc12f;
   font-weight: bold;
 }
 
@@ -51,7 +50,7 @@
 .main-content {
   flex: 1;
   padding: 32px;
-  background-color: #f9fafb;
+  background-color:rgb(69, 112, 143);
 }
 
 /* 顶部搜索栏 */

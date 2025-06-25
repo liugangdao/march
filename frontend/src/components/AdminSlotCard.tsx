@@ -20,7 +20,7 @@ export default function AdminCard({ imageUrl, name, slotid,themeid,date,time,max
       <p className="card-date">{date}</p>
       <p className ="card-time">{time}</p>
       <p className ="card-maxpeople">maxPeople:{maxpeople}</p>2
-      <div className="flex gap-2">
+      <div className="card-buttons">
         <button className="card-button" onClick={() => onEdit(slotid)}>
           Edit
         </button>
