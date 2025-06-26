@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import { apiClient, API_ENDPOINTS } from "../config/api";
 import styles from "./RegisterPage.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function RegisterPage() {
     if (!validatePassword()) return;
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/users/register", {
+      const response = await apiClient.post(API_ENDPOINTS.users.register, {
         name,
         email,
         password,

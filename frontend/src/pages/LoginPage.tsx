@@ -1,19 +1,23 @@
 import { useState } from "react";
-import axios from "axios";
+import { apiClient, API_ENDPOINTS } from "../config/api";
 // LoginPage.tsx 顶部
 import styles from "./LoginPage.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/users/login", 
+      const response = await apiClient.post(API_ENDPOINTS.users.login, 
         new URLSearchParams({
           username: email,
           password: password,
@@ -24,7 +28,9 @@ export default function LoginPage() {
       const token = response.data.access_token;
       localStorage.setItem("token", token);
       setMessage("✅ Login Successful");
-      navigate("/");
+      
+      navigate(from, { replace: true });
+
     } catch (error) {
       setMessage("❌ Fail to Login");
     }

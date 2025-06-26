@@ -1,37 +1,53 @@
-import { useNavigate } from "react-router-dom";
-
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/Card";
 import './Card.css';
 
-
-type AdminProps = {
-  imageUrl: string;
+// 1. 定义清晰的数据类型
+type Theme = {
+  id: number;
   name: string;
+  imageUrl: string;
   rating: number;
   description: string;
-  id: number;
-  onDelete: (id: number) => void;
-  onEdit:(id: number) => void
 };
 
-export default function AdminCard({ imageUrl, name, rating, description, id, onDelete,onEdit}: AdminProps) {
+type AdminThemeCardProps = {
+  theme: Theme;
+  onDelete: (id: number) => void;
+  onEdit: (id: number) => void;
+  isDeleting?: boolean; // 增加加载状态
+};
+
+export default function AdminCard({ theme, onDelete, onEdit, isDeleting = false }: AdminThemeCardProps) {
+  
+  const handleDelete = () => {
+    // 2. 增加删除确认
+    if (window.confirm(`Are you sure you want to delete "${theme.name}"?`)) {
+      onDelete(theme.id);
+    }
+  };
+
   return (
-    <div className="card">
-      {imageUrl ? (
-        <img src={imageUrl} alt={name} className="card-image" />
+    <Card>
+      <CardHeader>
+        {theme.imageUrl ? (
+          <img src={theme.imageUrl} alt={theme.name} className="card-image" />
         ) : (
-        <div className="card-image-placeholder">No Image</div>
+          <div className="card-image-placeholder">No Image</div>
         )}
-      <h2 className="card-title">{name}</h2>
-      <p className="card-rating">Rating: {rating} / 5</p>
-      <p className="card-description">{description}</p>
-      <div className="card-buttons">
-        <button className="card-button" onClick={() => onEdit(id)}>
+        <CardTitle>{theme.name}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="card-rating">Rating: {theme.rating} / 5</p>
+        <p className="card-description">{theme.description}</p>
+      </CardContent>
+      <CardFooter>
+        <button className="card-button" onClick={() => onEdit(theme.id)} disabled={isDeleting}>
           Edit
         </button>
-        <button className="card-button" onClick={() => onDelete(id)}>
-          Delete
+        <button className="card-button" onClick={handleDelete} disabled={isDeleting}>
+          {isDeleting ? 'Deleting...' : 'Delete'}
         </button>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }

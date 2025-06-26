@@ -413,21 +413,24 @@ const [loading, setLoading] = useState(true);
                     ➕ Add New Theme
                   </button>
 
-                <div className="admin-theme-grid">
-                {themes.filter((theme) => theme.title.toLowerCase().includes(search.toLowerCase()))
-                .map((theme) => (
-                  <AdminCard
-                    key={theme.id}
-                    id={theme.id}
-                    imageUrl={theme.image_url}
-                    name={theme.title}
-                    rating={theme.rating}
-                    description={theme.description}
-                    onDelete={handleThemeDelete}
-                    onEdit={() => handleThemeEdit(theme.id, theme)}
-                  />
-                ))}
-              </div>
+                  <div className="admin-theme-grid">
+                    {themes
+                      .filter((theme) => theme.title.toLowerCase().includes(search.toLowerCase()))
+                      .map((theme) => (
+                        <AdminCard
+                          key={theme.id}
+                          theme={{
+                            id: theme.id,
+                            name: theme.title,
+                            imageUrl: theme.image_url ?? "/default.png",
+                            rating: theme.rating ?? 0,
+                            description: theme.description ?? "",
+                          }}
+                          onDelete={handleThemeDelete}
+                          onEdit={() => handleThemeEdit(theme.id, theme)}
+                        />
+                      ))}
+                  </div>
                 </>
               )}
             </div>
@@ -507,32 +510,32 @@ const [loading, setLoading] = useState(true);
                 </div>
               ) : (
                 <div className="admin-theme-grid">
-                {
-                  slots.filter((slot) => slot.name?.toLowerCase().includes(search.toLowerCase()) ?? true)
-                  .map((slot) => (
-                    <AdminSlotCard
-                      key={slot.slotid ?? `theme-${slot.themeid}`}
-                      imageUrl={slot.imageUrl ?? "/default.png"}
-                      name={slot.name ?? "Untitled"}
-                      slotid={slot.slotid ?? -1}
-                      themeid={slot.themeid}
-                      date={slot.date ?? ""}
-                      time={slot.time ?? ""}
-                      maxpeople={slot.maxpeople ?? 0}
-                      onEdit={() => handleEdit(slot.slotid, slot)}
-                      onAdd={(themeid) => {
-                        setIsAdding(true);
-                        setAddingThemeId(themeid);
-                        setEditingSlotId(null);
-                      }}
-                      ondelete={() => handleSlotDelete(slot.slotid)}
-                    />
-                  ))
-
-                }
-
+                  {slots
+                    .filter((slot) => slot.name?.toLowerCase().includes(search.toLowerCase()) ?? true)
+                    .map((slot) => (
+                      <AdminSlotCard
+                        key={slot.slotid}
+                        slot={{
+                          id: slot.slotid,
+                          themeId: slot.themeid,
+                          date: slot.date,
+                          time: slot.time,
+                          maxPeople: slot.maxpeople,
+                        }}
+                        theme={{
+                          name: slot.name,
+                          imageUrl: slot.imageUrl ?? "/default.png",
+                        }}
+                        onEdit={() => handleEdit(slot.slotid, slot)}
+                        onAdd={(themeId) => {
+                          setIsAdding(true);
+                          setAddingThemeId(themeId);
+                          setEditingSlotId(null);
+                        }}
+                        onDelete={handleSlotDelete}
+                      />
+                    ))}
                 </div>
-
               )}
               
             </div>
